@@ -208,6 +208,27 @@ def logind():
             return jsonify({"error": "ID not found"}), 404
 
     return jsonify({"ok":True})
+@app.route("/api/getdata2",methods=["GET", "POST"])
+def logind2():
+    if request.method == "POST":
+        db = client["myfirst"]
+        usersdata = db["store data"]
+        user_doc = usersdata.find_one({ "data": { "$exists": True } })
+        data = request.json
+        ID:str = str(data.get("id"))
+        subject:str = str(data.get("subject"))
+        if ID in user_doc["data"]["all"]["studenttdata"]:
+            if subject in user_doc["data"]["all"]["studenttdata"][ID]["subject"]:
+                sub = user_doc["data"]["all"]["studenttdata"][ID]["subject"][subject]
+                len(sub)
+                d = [x+1 for x in range(len(sub))]
+                return jsonify({"data":d})
+            else:
+                return jsonify({"error": "Subject not found"}), 404
+        else:
+            #print({"error": "ID not found"})
+            return jsonify({"error": "ID not found"}), 404
+    return jsonify({"error": "How?"}), 404
 #limiter = Limiter(key_func=get_remote_address)
 #limiter.init_app(app)
 #@app.route("/api/getdata1", methods=["POST"])
