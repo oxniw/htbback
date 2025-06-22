@@ -18,80 +18,6 @@ client = MongoClient(
 @app.route("/",methods=["GET", "POST"])
 def home():
     return "Flask App is Running!", 200
-#@app.route("/api/getdata",methods=["GET", "POST"])
-#def login():
-#    if request.method == "POST":
-#        db = client["myfirst"]
-#        usersdata = db["storedata"]
-#        user_doc = usersdata.find_one({ "data": { "$exists": True } })
-#        data = request.json
-#        ##print()
-#        classes = data.get("class")
-#        ID = data.get("id")
-#        subject = data.get("subject")
-#        tries = data.get("tries")
-#        classes = classes.split("/")
-#        rfs = 5
-#        if classes[0] in user_doc["data"]["bigdata"]:
-#            ##print(1)
-#            if classes[1] in user_doc["data"]["bigdata"][classes[0]]:
-#                ##print(2)
-#                ##print(ID)
-#                if ID in user_doc["data"]["bigdata"][classes[0]][classes[1]]:
-#                    ##print(3)
-#        
-#                    if subject in user_doc["data"]["bigdata"][classes[0]][classes[1]][ID]:
-#                        ##print(4)
-#                        sub:dict = user_doc["data"]["bigdata"][classes[0]][classes[1]][ID][subject]
-#                        l = len(sub[f"xi {subject}"])
-#                        check = {}
-#                        graphtopresent = {}
-#                        if int(tries) > l:
-#                            return jsonify({"error": "Tries exceeds available data"}), 400
-#                        for ject in sub.items():
-#                            check[ject[0]] = ject[1][int(tries)-1]
-#                        for ject in sub.items():
-#                            graphtopresent[ject[0]] = ject[1][0:int(tries)]
-#                        for ject in graphtopresent.items():
-#                            ##print(len(ject[1]),(ject[1]))
-#                            if len(ject[1]) - rfs +1  >= 1:
-#                                for i in range(len(ject[1]) - rfs):
-#                                    del graphtopresent[ject[0]][0]
-#                        ##print(graphtopresent)
-#                        ##print(check)
-#                        
-#                        totaldata= []
-#                        
-#                        for inxd,ject in enumerate(graphtopresent.items()):
-#                            ##print(inxd)
-#                            ##print(ject[0], ject[1])
-#                            #print( int(tries) - rfs)
-#                            store = []
-#                            for inx,k in enumerate(ject[1]):
-#
-#                                aps = {}
-#                                if int(tries) - rfs < 0:
-#                                    aps["tries"] = f"สอบครั้งที่ {inx + 1}"
-#                                else:
-#                                    aps["tries"] = f"สอบครั้งที่ {inx + int(tries) - len(graphtopresent) + 1}"
-#                                aps[[f"xi {subject}",f"percentile {subject}", f"ximax {subject}", f"xipercent {subject}", f"zscore {subject}"][inxd]] = k
-#                                aps["subject"] = ject[0]
-#                                store.append(aps)
-#                            totaldata.append(store)
-#                        
-#                        ##print(totaldata)
-#                            
-#                        return jsonify({"message": "Data already exists","userdata":check,"totaldata":totaldata}), 200
-#                    else:
-#                        return jsonify({"error": "Subject not found"}), 404
-#                else:
-#                    return jsonify({"error": "ID not found"}), 404
-#            else:
-#                return jsonify({"error": "Class not found"}), 404
-#        else:
-#            return jsonify({"error": "Class not found"}), 404
-#
-#    return jsonify({"ok":True})
 @app.route("/api/getdata1",methods=["GET", "POST"])
 def logind():
     if request.method == "POST":
@@ -202,7 +128,7 @@ def logind():
                 return jsonify({"message": "Data already exists","userdata":show,"totaldata":st,"totals":st1,"stats":stats,"ximax":len(stats)-1,"cl":witorsil,"all":new_data}), 200
             else:
                 #print({"error": "Subject not found"})
-                return jsonify({"error": "Subject not found"}), 404
+                return jsonify({"error": "ยังไม่ได้สอบหรือยังไม่ได้ใส่ข้อมูล"}), 404
         else:
             #print({"error": "ID not found"})
             return jsonify({"error": "ID not found"}), 404
@@ -224,7 +150,7 @@ def logind2():
                 d = [x+1 for x in range(len(sub))]
                 return jsonify({"data":d})
             else:
-                return jsonify({"error": "Subject not found"}), 404
+                return jsonify({"error": "ยังไม่ได้สอบหรือยังไม่ได้ใส่ข้อมูล"}), 404
         else:
             #print({"error": "ID not found"})
             return jsonify({"error": "ID not found"}), 404
